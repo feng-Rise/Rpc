@@ -20,7 +20,7 @@ import (
 const MagicNumber = 0x3bef5c
 
 type Option struct {
-	MagicNumber int        // MagicNumber marks this's a geerpc request
+	MagicNumber int        // MagicNumber marks this is a rpc request
 	CodecType   codec.Type // client may choose different Codec to encode body
 }
 
@@ -126,7 +126,7 @@ func (server *Server) sendResponse(cc codec.Codec, h *codec.Header, body interfa
 
 func (server *Server) handleRequest(cc codec.Codec, req *request, sending *sync.Mutex, wg *sync.WaitGroup) {
 	// TODO, should call registered rpc methods to get the right replyv
-	// day 1, just print argv and send a hello message
+	// just print argv and send a hello message
 	defer wg.Done()
 	log.Println(req.h, req.argv.Elem())
 	req.replyv = reflect.ValueOf(fmt.Sprintf("geerpc resp %d", req.h.Seq))
